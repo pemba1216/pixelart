@@ -1,254 +1,381 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Pixel Art Character - Upgraded</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;700&display=swap');
-
-    body {
-      background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
-      font-family: 'Pixelify Sans', sans-serif;
-      height: 100vh;
-      overflow: hidden;
-    }
-    .pixel-container {
-      width: 300px;
-      height: 300px;
-      position: relative;
-    }
-    .pixel {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      transition: all 0.3s ease;
-    }
-    .button {
-      transition: all 0.2s;
-    }
-    .button:hover {
-      transform: scale(1.05);
-      filter: brightness(1.1);
-    }
-    .button:active {
-      transform: scale(0.95);
-    }
-    .speech-bubble {
-      position: relative;
-      background: #fff;
-      border-radius: 20px;
-      padding: 15px;
-      filter: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07));
-    }
-    .speech-bubble:after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      width: 0;
-      height: 0;
-      border: 15px solid transparent;
-      border-top-color: #fff;
-      border-bottom: 0;
-      margin-left: -15px;
-      margin-bottom: -15px;
-    }
-    @keyframes breathing {
-      0%, 100% { transform: scale(1,1); }
-      50% { transform: scale(1.05,0.95); }
-    }
-    @keyframes happy {
-      0%, 100% { transform: translateY(0); }
-      25% { transform: translateY(-10px); }
-      75% { transform: translateY(-5px); }
-    }
-    @keyframes dance {
-      0% { transform: translateX(0) rotate(0deg); }
-      25% { transform: translateX(-20px) rotate(-10deg); }
-      50% { transform: translateX(0) rotate(0deg); }
-      75% { transform: translateX(20px) rotate(10deg); }
-      100% { transform: translateX(0) rotate(0deg); }
-    }
-    @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      25% { transform: translateX(-5px); }
-      75% { transform: translateX(5px); }
-    }
-    .breathing {
-      animation: breathing 2s ease-in-out infinite;
-    }
-    .happy-animation {
-      animation: happy 0.5s ease-in-out infinite;
-    }
-    .dance-animation {
-      animation: dance 0.7s ease-in-out infinite;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Art Character</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            font-family: 'Pixelify Sans', sans-serif;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        @import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;700&display=swap');
+        
+        .pixel-container {
+            width: 300px;
+            height: 300px;
+            position: relative;
+        }
+        
+        .pixel {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .button {
+            transition: all 0.2s;
+        }
+        
+        .button:hover {
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
+        
+        .button:active {
+            transform: scale(0.95);
+        }
+        
+        .speech-bubble {
+            position: relative;
+            background: #fff;
+            border-radius: 20px;
+            padding: 15px;
+            filter: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07));
+        }
+        
+        .speech-bubble:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border: 15px solid transparent;
+            border-top-color: #fff;
+            border-bottom: 0;
+            margin-left: -15px;
+            margin-bottom: -15px;
+        }
+        
+        @keyframes happy {
+            0%, 100% { transform: translateY(0); }
+            25% { transform: translateY(-10px); }
+            75% { transform: translateY(-5px); }
+        }
+        
+        @keyframes dance {
+            0% { transform: translateX(0) rotate(0deg); }
+            25% { transform: translateX(-20px) rotate(-10deg); }
+            50% { transform: translateX(0) rotate(0deg); }
+            75% { transform: translateX(20px) rotate(10deg); }
+            100% { transform: translateX(0) rotate(0deg); }
+        }
+        
+        @keyframes blink {
+            0%, 48%, 52%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        .blinking {
+            animation: blink 3s infinite;
+        }
+        
+        .breathing {
+            animation: breathing 2s ease-in-out infinite;
+        }
+        
+        @keyframes breathing {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .happy-animation {
+            animation: happy 0.5s ease-in-out infinite;
+        }
+        
+        .dance-animation {
+            animation: dance 0.7s ease-in-out infinite;
+        }
+    </style>
 </head>
 <body class="flex flex-col items-center justify-center">
-
-  <div class="max-w-md w-full bg-white bg-opacity-80 rounded-xl shadow-lg p-6 m-4">
-    <div class="speech-bubble mb-8 text-center">
-      <p id="speech-text" class="text-lg font-mono">I am extremely apologetic, I can't breathe arggghh huuuh ufff huuuff fasttt, Please don't be angry.</p>
-      <p id="speech-text2" class="text-lg mt-2 font-mono">Forgive me the Princess Of Meat lover Prinka</p>
-    </div>
-
-    <div class="flex justify-center">
-      <div id="pixel-art" class="pixel-container breathing mb-6"></div>
-    </div>
-
-    <div class="flex justify-center gap-4 mt-4">
-      <button id="yes-btn" class="button bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg shadow-md">
-        Yes, I forgive you
-      </button>
-      <button id="no-btn" class="button bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 px-6 rounded-lg shadow-md">
-        No, I don't
-      </button>
-    </div>
-  </div>
-
-  <script>
-    const characterData = {
-      face: [
-        {x: 5, y: 2, color: "#FFE0B2", width: 5, height: 4},
-      ],
-      eyes: {
-        normal: [
-          {x: 6, y: 3, color: "#000", width: 1, height: 1},
-          {x: 8, y: 3, color: "#000", width: 1, height: 1}
-        ],
-        happy: [
-          {x: 6, y: 3, color: "#000", width: 1, height: 1, shape: "arc"},
-          {x: 8, y: 3, color: "#000", width: 1, height: 1, shape: "arc"}
-        ],
-        sad: [
-          {x: 6, y: 3, color: "#555", width: 1, height: 1},
-          {x: 8, y: 3, color: "#555", width: 1, height: 1}
-        ]
-      },
-      blush: [
-        {x: 5, y: 4, color: "#F48FB1", width: 1, height: 1},
-        {x: 9, y: 4, color: "#F48FB1", width: 1, height: 1}
-      ],
-      body: [
-        {x: 6, y: 6, color: "#64B5F6", width: 3, height: 5},
-      ],
-      arms: [
-        {x: 5, y: 7, color: "#64B5F6", width: 1, height: 3},
-        {x: 9, y: 7, color: "#64B5F6", width: 1, height: 3},
-      ],
-      legs: [
-        {x: 6, y: 11, color: "#64B5F6", width: 1, height: 2},
-        {x: 8, y: 11, color: "#64B5F6", width: 1, height: 2},
-      ],
-      hat: [
-        {x: 4, y: 1, color: "#9C27B0", width: 7, height: 1},
-        {x: 5, y: 0, color: "#9C27B0", width: 5, height: 1}
-      ],
-      tears: [
-        {x: 6, y: 4, color: "#81D4FA", width: 1, height: 1},
-        {x: 8, y: 4, color: "#81D4FA", width: 1, height: 1},
-      ],
-      sparkles: [
-        {x: 3, y: 2, color: "#FFD700", width: 1, height: 1},
-        {x: 11, y: 2, color: "#FFD700", width: 1, height: 1}
-      ]
-    };
-
-    let currentState = "normal";
-    let isAnimating = false;
-
-    function renderCharacter(state = "normal") {
-      const container = document.getElementById("pixel-art");
-      container.innerHTML = "";
-
-      renderParts(characterData.face, container);
-      renderParts(characterData.body, container);
-      renderParts(characterData.arms, container);
-      renderParts(characterData.legs, container);
-      renderParts(characterData.hat, container);
-      renderParts(characterData.eyes[state], container);
-      renderParts(characterData.blush, container);
-
-      if (state === "happy") renderParts(characterData.sparkles, container);
-      if (state === "sad") renderParts(characterData.tears, container);
-    }
-
-    function renderParts(parts, container) {
-      parts.forEach(part => {
-        const pixel = document.createElement("div");
-        pixel.className = "pixel";
-        pixel.style.left = `${part.x * 20}px`;
-        pixel.style.top = `${part.y * 20}px`;
-        pixel.style.width = `${part.width * 20}px`;
-        pixel.style.height = `${part.height * 20}px`;
-        pixel.style.backgroundColor = part.color;
+    <div class="max-w-md w-full bg-white bg-opacity-80 rounded-xl shadow-lg p-6 m-4">
+        <div class="speech-bubble mb-8 text-center">
+            <p class="text-lg"><p style="font-family: monospace;">I am extremely apologetic, I can't breathe arggghh huuuh ufff huuuff fasttt, Please don't be angry.</p></p>
+            <p class="text-lg mt-2"><p style="font-family: monospace;">Forgive me the Princess Of Meat lover Prinka</p></p>
+        </div>
         
-        if (part.shape === "arc") {
-          pixel.style.borderRadius = "50%";
-        } else if (part.shape === "smile") {
-          pixel.style.borderRadius = "0 0 10px 10px";
-        } else if (part.shape === "frown") {
-          pixel.style.borderRadius = "10px 10px 0 0";
-          pixel.style.transform = "rotate(180deg)";
+        <div class="flex justify-center">
+            <div id="pixel-art" class="pixel-container breathing mb-6"></div>
+        </div>
+        
+        <div class="flex justify-center gap-4 mt-4">
+            <button id="yes-btn" class="button bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg shadow-md">
+                Yes, I forgive you
+            </button>
+            <button id="no-btn" class="button bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 px-6 rounded-lg shadow-md">
+                Dance for me
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Pixel art character definition
+        const pixelArt = [
+            // Base head shape
+            {x: 7, y: 3, color: '#FFD39B', type: 'face'},
+            {x: 8, y: 3, color: '#FFD39B', type: 'face'},
+            {x: 9, y: 3, color: '#FFD39B', type: 'face'},
+            {x: 6, y: 4, color: '#FFD39B', type: 'face'},
+            {x: 7, y: 4, color: '#FFD39B', type: 'face'},
+            {x: 8, y: 4, color: '#FFD39B', type: 'face'},
+            {x: 9, y: 4, color: '#FFD39B', type: 'face'},
+            {x: 10, y: 4, color: '#FFD39B', type: 'face'},
+            {x: 5, y: 5, color: '#FFD39B', type: 'face'},
+            {x: 6, y: 5, color: '#FFD39B', type: 'face'},
+            {x: 7, y: 5, color: '#FFD39B', type: 'face'},
+            {x: 8, y: 5, color: '#FFD39B', type: 'face'},
+            {x: 9, y: 5, color: '#FFD39B', type: 'face'},
+            {x: 10, y: 5, color: '#FFD39B', type: 'face'},
+            {x: 11, y: 5, color: '#FFD39B', type: 'face'},
+            {x: 5, y: 6, color: '#FFD39B', type: 'face'},
+            {x: 6, y: 6, color: '#FFD39B', type: 'face'},
+            {x: 7, y: 6, color: '#FFD39B', type: 'face'},
+            {x: 8, y: 6, color: '#FFD39B', type: 'face'},
+            {x: 9, y: 6, color: '#FFD39B', type: 'face'},
+            {x: 10, y: 6, color: '#FFD39B', type: 'face'},
+            {x: 11, y: 6, color: '#FFD39B', type: 'face'},
+            {x: 5, y: 7, color: '#FFD39B', type: 'face'},
+            {x: 6, y: 7, color: '#FFD39B', type: 'face'},
+            {x: 7, y: 7, color: '#FFD39B', type: 'face'},
+            {x: 8, y: 7, color: '#FFD39B', type: 'face'},
+            {x: 9, y: 7, color: '#FFD39B', type: 'face'},
+            {x: 10, y: 7, color: '#FFD39B', type: 'face'},
+            {x: 11, y: 7, color: '#FFD39B', type: 'face'},
+            {x: 5, y: 8, color: '#FFD39B', type: 'face'},
+            {x: 6, y: 8, color: '#FFD39B', type: 'face'},
+            {x: 7, y: 8, color: '#FFD39B', type: 'face'},
+            {x: 8, y: 8, color: '#FFD39B', type: 'face'},
+            {x: 9, y: 8, color: '#FFD39B', type: 'face'},
+            {x: 10, y: 8, color: '#FFD39B', type: 'face'},
+            {x: 11, y: 8, color: '#FFD39B', type: 'face'},
+            {x: 6, y: 9, color: '#FFD39B', type: 'face'},
+            {x: 7, y: 9, color: '#FFD39B', type: 'face'},
+            {x: 8, y: 9, color: '#FFD39B', type: 'face'},
+            {x: 9, y: 9, color: '#FFD39B', type: 'face'},
+            {x: 10, y: 9, color: '#FFD39B', type: 'face'},
+            {x: 7, y: 10, color: '#FFD39B', type: 'face'},
+            {x: 8, y: 10, color: '#FFD39B', type: 'face'},
+            {x: 9, y: 10, color: '#FFD39B', type: 'face'},
+            
+            // Eyes
+            {x: 6, y: 6, color: '#333333', type: 'left-eye'},
+            {x: 10, y: 6, color: '#333333', type: 'right-eye'},
+            {x: 6, y: 6, color: 'white', type: 'left-eye-shine', size: 0.4, offsetX: 0.3, offsetY: 0.3},
+            {x: 10, y: 6, color: 'white', type: 'right-eye-shine', size: 0.4, offsetX: 0.3, offsetY: 0.3},
+            
+            // Eyebrows
+            {x: 6, y: 5, color: '#8B4513', type: 'left-eyebrow'},
+            {x: 10, y: 5, color: '#8B4513', type: 'right-eyebrow'},
+            
+            // Mouth (neutral)
+            {x: 7, y: 8, color: '#FF6B6B', type: 'mouth'},
+            {x: 8, y: 8, color: '#FF6B6B', type: 'mouth'},
+            {x: 9, y: 8, color: '#FF6B6B', type: 'mouth'},
+            
+            // Blush
+            {x: 5, y: 7, color: '#FFB6C1', type: 'left-blush'},
+            {x: 11, y: 7, color: '#FFB6C1', type: 'right-blush'},
+            
+            // Hair
+            {x: 6, y: 2, color: '#8B4513', type: 'hair'},
+            {x: 7, y: 2, color: '#8B4513', type: 'hair'},
+            {x: 8, y: 2, color: '#8B4513', type: 'hair'},
+            {x: 9, y: 2, color: '#8B4513', type: 'hair'},
+            {x: 10, y: 2, color: '#8B4513', type: 'hair'},
+            {x: 5, y: 3, color: '#8B4513', type: 'hair'},
+            {x: 6, y: 3, color: '#8B4513', type: 'hair'},
+            {x: 10, y: 3, color: '#8B4513', type: 'hair'},
+            {x: 11, y: 3, color: '#8B4513', type: 'hair'},
+            {x: 4, y: 4, color: '#8B4513', type: 'hair'},
+            {x: 5, y: 4, color: '#8B4513', type: 'hair'},
+            {x: 11, y: 4, color: '#8B4513', type: 'hair'},
+            {x: 12, y: 4, color: '#8B4513', type: 'hair'},
+            {x: 4, y: 5, color: '#8B4513', type: 'hair'},
+            {x: 12, y: 5, color: '#8B4513', type: 'hair'},
+            {x: 4, y: 6, color: '#8B4513', type: 'hair'},
+            {x: 12, y: 6, color: '#8B4513', type: 'hair'},
+            {x: 4, y: 7, color: '#8B4513', type: 'hair'},
+            {x: 12, y: 7, color: '#8B4513', type: 'hair'},
+            {x: 4, y: 8, color: '#8B4513', type: 'hair'},
+            {x: 12, y: 8, color: '#8B4513', type: 'hair'},
+            {x: 5, y: 9, color: '#8B4513', type: 'hair'},
+            {x: 11, y: 9, color: '#8B4513', type: 'hair'},
+            {x: 6, y: 10, color: '#8B4513', type: 'hair'},
+            {x: 10, y: 10, color: '#8B4513', type: 'hair'},
+            
+            // Body
+            {x: 7, y: 11, color: '#FF9AA2', type: 'body'},
+            {x: 8, y: 11, color: '#FF9AA2', type: 'body'},
+            {x: 9, y: 11, color: '#FF9AA2', type: 'body'},
+            {x: 6, y: 12, color: '#FF9AA2', type: 'body'},
+            {x: 7, y: 12, color: '#FF9AA2', type: 'body'},
+            {x: 8, y: 12, color: '#FF9AA2', type: 'body'},
+            {x: 9, y: 12, color: '#FF9AA2', type: 'body'},
+            {x: 10, y: 12, color: '#FF9AA2', type: 'body'},
+        ];
+
+        // Create pixel art
+        function createPixelArt() {
+            const container = document.getElementById('pixel-art');
+            container.innerHTML = '';
+            
+            pixelArt.forEach(pixel => {
+                const pixelElement = document.createElement('div');
+                pixelElement.className = 'pixel';
+                pixelElement.style.backgroundColor = pixel.color;
+                pixelElement.style.left = `${pixel.x * 20}px`;
+                pixelElement.style.top = `${pixel.y * 20}px`;
+                
+                // Add data attributes for animation targeting
+                pixelElement.dataset.type = pixel.type;
+                
+                // Handle special pixels like eye shine
+                if (pixel.size) {
+                    pixelElement.style.width = `${pixel.size * 20}px`;
+                    pixelElement.style.height = `${pixel.size * 20}px`;
+                    pixelElement.style.left = `${pixel.x * 20 + (pixel.offsetX * 20)}px`;
+                    pixelElement.style.top = `${pixel.y * 20 + (pixel.offsetY * 20)}px`;
+                    pixelElement.style.borderRadius = '50%';
+                }
+                
+                container.appendChild(pixelElement);
+            });
+            
+            // Add blinking animation to eyes
+            const eyes = document.querySelectorAll('[data-type="left-eye"], [data-type="right-eye"]');
+            eyes.forEach(eye => {
+                eye.classList.add('blinking');
+            });
         }
-        container.appendChild(pixel);
-      });
-    }
 
-    renderCharacter();
+        // Happy animation
+        function showHappyAnimation() {
+            const container = document.getElementById('pixel-art');
+            container.classList.remove('breathing', 'dance-animation');
+            container.classList.add('happy-animation');
+            
+            // Change mouth to a smile
+            const mouthPixels = document.querySelectorAll('[data-type="mouth"]');
+            mouthPixels.forEach(pixel => {
+                pixel.style.backgroundColor = '#FF6B6B';
+            });
+            
+            // Make eyes more expressive
+            const leftEye = document.querySelector('[data-type="left-eye"]');
+            const rightEye = document.querySelector('[data-type="right-eye"]');
+            if (leftEye && rightEye) {
+                leftEye.style.transform = 'scale(0.8)';
+                rightEye.style.transform = 'scale(0.8)';
+            }
+            
+            // Make blush more pronounced
+            const blushPixels = document.querySelectorAll('[data-type="left-blush"], [data-type="right-blush"]');
+            blushPixels.forEach(pixel => {
+                pixel.style.backgroundColor = '#FF8DA1';
+                pixel.style.transform = 'scale(1.2)';
+            });
+            
+            // Eyebrows up
+            const eyebrows = document.querySelectorAll('[data-type="left-eyebrow"], [data-type="right-eyebrow"]');
+            eyebrows.forEach(eyebrow => {
+                eyebrow.style.transform = 'translateY(-3px)';
+            });
+        }
 
-    document.getElementById("yes-btn").addEventListener("click", () => {
-      if (!isAnimating) {
-        isAnimating = true;
-        currentState = "happy";
-        renderCharacter(currentState);
+        // Dance animation
+        function showDanceAnimation() {
+            const container = document.getElementById('pixel-art');
+            container.classList.remove('breathing', 'happy-animation');
+            container.classList.add('dance-animation');
+            
+            // Change mouth to an "O" shape
+            const mouthPixels = document.querySelectorAll('[data-type="mouth"]');
+            mouthPixels.forEach(pixel => {
+                pixel.style.backgroundColor = '#FF6B6B';
+            });
+            
+            // Make eyes more expressive
+            const leftEye = document.querySelector('[data-type="left-eye"]');
+            const rightEye = document.querySelector('[data-type="right-eye"]');
+            if (leftEye && rightEye) {
+                leftEye.style.transform = 'scale(1.1)';
+                rightEye.style.transform = 'scale(1.1)';
+            }
+            
+            // Eyebrows up
+            const eyebrows = document.querySelectorAll('[data-type="left-eyebrow"], [data-type="right-eyebrow"]');
+            eyebrows.forEach(eyebrow => {
+                eyebrow.style.transform = 'translateY(-2px) rotate(10deg)';
+            });
+        }
 
-        document.getElementById("speech-text").textContent = "Yay! Thank you so much!";
-        document.getElementById("speech-text2").textContent = "You're the best, Princess Prinka!";
+        // Reset animation
+        function resetAnimation() {
+            const container = document.getElementById('pixel-art');
+            container.classList.remove('happy-animation', 'dance-animation');
+            container.classList.add('breathing');
+            
+            // Reset mouth
+            const mouthPixels = document.querySelectorAll('[data-type="mouth"]');
+            mouthPixels.forEach(pixel => {
+                pixel.style.backgroundColor = '#FF6B6B';
+                pixel.style.transform = 'none';
+            });
+            
+            // Reset eyes
+            const eyes = document.querySelectorAll('[data-type="left-eye"], [data-type="right-eye"]');
+            eyes.forEach(eye => {
+                eye.style.transform = 'none';
+            });
+            
+            // Reset blush
+            const blushPixels = document.querySelectorAll('[data-type="left-blush"], [data-type="right-blush"]');
+            blushPixels.forEach(pixel => {
+                pixel.style.backgroundColor = '#FFB6C1';
+                pixel.style.transform = 'none';
+            });
+            
+            // Reset eyebrows
+            const eyebrows = document.querySelectorAll('[data-type="left-eyebrow"], [data-type="right-eyebrow"]');
+            eyebrows.forEach(eyebrow => {
+                eyebrow.style.transform = 'none';
+            });
+        }
 
-        const container = document.getElementById("pixel-art");
-        container.classList.remove("breathing");
-        container.classList.add("happy-animation");
-
-        setTimeout(() => {
-          container.classList.add("dance-animation");
-          setTimeout(() => {
-            container.classList.remove("happy-animation", "dance-animation");
-            container.classList.add("breathing");
-            currentState = "normal";
-            renderCharacter(currentState);
-            isAnimating = false;
-          }, 3000);
-        }, 1000);
-      }
-    });
-
-    document.getElementById("no-btn").addEventListener("click", () => {
-      if (!isAnimating) {
-        isAnimating = true;
-        currentState = "sad";
-        renderCharacter(currentState);
-
-        document.getElementById("speech-text").textContent = "Oh no! I'll try harder to make it up to you!";
-        document.getElementById("speech-text2").textContent = "Please give me another chance...";
-
-        const container = document.getElementById("pixel-art");
-        container.classList.remove("breathing");
-        container.style.animation = "shake 0.5s ease-in-out infinite";
-
-        setTimeout(() => {
-          container.style.animation = "";
-          container.classList.add("breathing");
-          currentState = "normal";
-          renderCharacter(currentState);
-          isAnimating = false;
-        }, 3000);
-      }
-    });
-  </script>
-
-</body>
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            createPixelArt();
+            
+            // Button event listeners
+            document.getElementById('yes-btn').addEventListener('click', () => {
+                showHappyAnimation();
+                setTimeout(resetAnimation, 3000);
+            });
+            
+            document.getElementById('no-btn').addEventListener('click', () => {
+                showDanceAnimation();
+                setTimeout(resetAnimation, 3000);
+            });
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9374167dc154ea9a',t:'MTc0NTgxNzM5MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
