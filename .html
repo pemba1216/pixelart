@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pixel Art Character - Upgraded</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;700&display=swap');
+
+    body {
+      background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+      font-family: 'Pixelify Sans', sans-serif;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .pixel-container {
+      width: 300px;
+      height: 300px;
+      position: relative;
+    }
+    .pixel {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      transition: all 0.3s ease;
+    }
+    .button {
+      transition: all 0.2s;
+    }
+    .button:hover {
+      transform: scale(1.05);
+      filter: brightness(1.1);
+    }
+    .button:active {
+      transform: scale(0.95);
+    }
+    .speech-bubble {
+      position: relative;
+      background: #fff;
+      border-radius: 20px;
+      padding: 15px;
+      filter: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07));
+    }
+    .speech-bubble:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border: 15px solid transparent;
+      border-top-color: #fff;
+      border-bottom: 0;
+      margin-left: -15px;
+      margin-bottom: -15px;
+    }
+    @keyframes breathing {
+      0%, 100% { transform: scale(1,1); }
+      50% { transform: scale(1.05,0.95); }
+    }
+    @keyframes happy {
+      0%, 100% { transform: translateY(0); }
+      25% { transform: translateY(-10px); }
+      75% { transform: translateY(-5px); }
+    }
+    @keyframes dance {
+      0% { transform: translateX(0) rotate(0deg); }
+      25% { transform: translateX(-20px) rotate(-10deg); }
+      50% { transform: translateX(0) rotate(0deg); }
+      75% { transform: translateX(20px) rotate(10deg); }
+      100% { transform: translateX(0) rotate(0deg); }
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+    .breathing {
+      animation: breathing 2s ease-in-out infinite;
+    }
+    .happy-animation {
+      animation: happy 0.5s ease-in-out infinite;
+    }
+    .dance-animation {
+      animation: dance 0.7s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body class="flex flex-col items-center justify-center">
+
+  <div class="max-w-md w-full bg-white bg-opacity-80 rounded-xl shadow-lg p-6 m-4">
+    <div class="speech-bubble mb-8 text-center">
+      <p id="speech-text" class="text-lg font-mono">I am extremely apologetic, I can't breathe arggghh huuuh ufff huuuff fasttt, Please don't be angry.</p>
+      <p id="speech-text2" class="text-lg mt-2 font-mono">Forgive me the Princess Of Meat lover Prinka</p>
+    </div>
+
+    <div class="flex justify-center">
+      <div id="pixel-art" class="pixel-container breathing mb-6"></div>
+    </div>
+
+    <div class="flex justify-center gap-4 mt-4">
+      <button id="yes-btn" class="button bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg shadow-md">
+        Yes, I forgive you
+      </button>
+      <button id="no-btn" class="button bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 px-6 rounded-lg shadow-md">
+        No, I don't
+      </button>
+    </div>
+  </div>
+
+  <script>
+    const characterData = {
+      face: [
+        {x: 5, y: 2, color: "#FFE0B2", width: 5, height: 4},
+      ],
+      eyes: {
+        normal: [
+          {x: 6, y: 3, color: "#000", width: 1, height: 1},
+          {x: 8, y: 3, color: "#000", width: 1, height: 1}
+        ],
+        happy: [
+          {x: 6, y: 3, color: "#000", width: 1, height: 1, shape: "arc"},
+          {x: 8, y: 3, color: "#000", width: 1, height: 1, shape: "arc"}
+        ],
+        sad: [
+          {x: 6, y: 3, color: "#555", width: 1, height: 1},
+          {x: 8, y: 3, color: "#555", width: 1, height: 1}
+        ]
+      },
+      blush: [
+        {x: 5, y: 4, color: "#F48FB1", width: 1, height: 1},
+        {x: 9, y: 4, color: "#F48FB1", width: 1, height: 1}
+      ],
+      body: [
+        {x: 6, y: 6, color: "#64B5F6", width: 3, height: 5},
+      ],
+      arms: [
+        {x: 5, y: 7, color: "#64B5F6", width: 1, height: 3},
+        {x: 9, y: 7, color: "#64B5F6", width: 1, height: 3},
+      ],
+      legs: [
+        {x: 6, y: 11, color: "#64B5F6", width: 1, height: 2},
+        {x: 8, y: 11, color: "#64B5F6", width: 1, height: 2},
+      ],
+      hat: [
+        {x: 4, y: 1, color: "#9C27B0", width: 7, height: 1},
+        {x: 5, y: 0, color: "#9C27B0", width: 5, height: 1}
+      ],
+      tears: [
+        {x: 6, y: 4, color: "#81D4FA", width: 1, height: 1},
+        {x: 8, y: 4, color: "#81D4FA", width: 1, height: 1},
+      ],
+      sparkles: [
+        {x: 3, y: 2, color: "#FFD700", width: 1, height: 1},
+        {x: 11, y: 2, color: "#FFD700", width: 1, height: 1}
+      ]
+    };
+
+    let currentState = "normal";
+    let isAnimating = false;
+
+    function renderCharacter(state = "normal") {
+      const container = document.getElementById("pixel-art");
+      container.innerHTML = "";
+
+      renderParts(characterData.face, container);
+      renderParts(characterData.body, container);
+      renderParts(characterData.arms, container);
+      renderParts(characterData.legs, container);
+      renderParts(characterData.hat, container);
+      renderParts(characterData.eyes[state], container);
+      renderParts(characterData.blush, container);
+
+      if (state === "happy") renderParts(characterData.sparkles, container);
+      if (state === "sad") renderParts(characterData.tears, container);
+    }
+
+    function renderParts(parts, container) {
+      parts.forEach(part => {
+        const pixel = document.createElement("div");
+        pixel.className = "pixel";
+        pixel.style.left = `${part.x * 20}px`;
+        pixel.style.top = `${part.y * 20}px`;
+        pixel.style.width = `${part.width * 20}px`;
+        pixel.style.height = `${part.height * 20}px`;
+        pixel.style.backgroundColor = part.color;
+        
+        if (part.shape === "arc") {
+          pixel.style.borderRadius = "50%";
+        } else if (part.shape === "smile") {
+          pixel.style.borderRadius = "0 0 10px 10px";
+        } else if (part.shape === "frown") {
+          pixel.style.borderRadius = "10px 10px 0 0";
+          pixel.style.transform = "rotate(180deg)";
+        }
+        container.appendChild(pixel);
+      });
+    }
+
+    renderCharacter();
+
+    document.getElementById("yes-btn").addEventListener("click", () => {
+      if (!isAnimating) {
+        isAnimating = true;
+        currentState = "happy";
+        renderCharacter(currentState);
+
+        document.getElementById("speech-text").textContent = "Yay! Thank you so much!";
+        document.getElementById("speech-text2").textContent = "You're the best, Princess Prinka!";
+
+        const container = document.getElementById("pixel-art");
+        container.classList.remove("breathing");
+        container.classList.add("happy-animation");
+
+        setTimeout(() => {
+          container.classList.add("dance-animation");
+          setTimeout(() => {
+            container.classList.remove("happy-animation", "dance-animation");
+            container.classList.add("breathing");
+            currentState = "normal";
+            renderCharacter(currentState);
+            isAnimating = false;
+          }, 3000);
+        }, 1000);
+      }
+    });
+
+    document.getElementById("no-btn").addEventListener("click", () => {
+      if (!isAnimating) {
+        isAnimating = true;
+        currentState = "sad";
+        renderCharacter(currentState);
+
+        document.getElementById("speech-text").textContent = "Oh no! I'll try harder to make it up to you!";
+        document.getElementById("speech-text2").textContent = "Please give me another chance...";
+
+        const container = document.getElementById("pixel-art");
+        container.classList.remove("breathing");
+        container.style.animation = "shake 0.5s ease-in-out infinite";
+
+        setTimeout(() => {
+          container.style.animation = "";
+          container.classList.add("breathing");
+          currentState = "normal";
+          renderCharacter(currentState);
+          isAnimating = false;
+        }, 3000);
+      }
+    });
+  </script>
+
+</body>
+</html>
